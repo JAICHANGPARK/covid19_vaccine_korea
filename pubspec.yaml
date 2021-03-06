@@ -26,6 +26,8 @@ dependencies:
   dio: ^4.0.0-beta5
   http: any
   fimber: ^0.6.1
+  sliding_up_panel: ^1.0.2
+  webview_flutter: ^2.0.2
 
 dev_dependencies:
   flutter_test:
