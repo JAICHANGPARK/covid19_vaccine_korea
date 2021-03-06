@@ -32,9 +32,10 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "모두의 백신",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
+                  Spacer(),
                   IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
                   IconButton(onPressed: () {}, icon: Icon(Icons.settings_outlined))
                 ],
@@ -81,6 +82,8 @@ class _HomePageState extends State<HomePage> {
                                           "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
                                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                         ),
+                                        Spacer(),
+                                        Text("${vaccineCenter.data?[index].sido}")
                                       ],
                                     ),
                                     Text("${vaccineCenter.data?[index].centerName}"),
@@ -109,6 +112,16 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(onPressed: (){},
+                  color: Theme.of(context).accentColor,
+                  minWidth: double.infinity,
+                  child: Center(child: Text("코로나19백신 및 예방접종", style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black
+                  ),)),),
               ),
             ],
           ),
