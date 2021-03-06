@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'src/ui/screen/main_app.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   if(kDebugMode){
     Fimber.plantTree(DebugTree());
     Fimber.d('debug mode');
