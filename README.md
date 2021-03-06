@@ -1,6 +1,15 @@
 # covid_19_vaccine_korea
 
-A new Flutter application.
+<div style="text-align: center">
+  <table>
+    <tr>
+  <td style="text-align: center">
+    <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_20210306_223928.png" width="200"/>
+</td>
+
+</tr>
+</table>
+</div>
 
 ## Getting Started
 
