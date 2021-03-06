@@ -23,18 +23,29 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "모두의 백신",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "모두의 백신",
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
                   ),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
                   IconButton(onPressed: () {}, icon: Icon(Icons.settings_outlined))
                 ],
               ),
-              Text("코로나19 예방접종센터",style: TextStyle(),),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "코로나19 예방접종센터",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
               Expanded(
                 child: FutureBuilder<VaccineCenter?>(
                   future: fetchVaccineCenter(),
@@ -55,8 +66,30 @@ class _HomePageState extends State<HomePage> {
 
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return Card(
-                            child: Column(),
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Card(
+                              elevation: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Text("${vaccineCenter.data?[index].centerName}"),
+                                    Text("${vaccineCenter.data?[index].facilityName}"),
+                                    Text("${vaccineCenter.data?[index].address}"),
+                                  ],
+                                ),
+                              ),
+                            ),
                           );
                         },
                         itemCount: vaccineCenter.data?.length,
