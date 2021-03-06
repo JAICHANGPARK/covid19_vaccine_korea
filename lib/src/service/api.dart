@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 Future<VaccineCenter?> fetchVaccineCenter() async {
   try {
     Response response = await Dio().get("https://api.odcloud.kr/api/15077586/v1/centers?serviceKey=${ApiKey.API_KEY}");
-    Fimber.d(">>> ${response}");
+    Fimber.d(">>> $response");
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.toString());
       Fimber.d('Number of books about http: $jsonResponse.');
@@ -27,14 +27,9 @@ Future<VaccineCenter?> fetchVaccineCenter() async {
 }
 
 Future fetchVaccineCenterOld() async {
-  var baseUrl =
-      "https://api.odcloud.kr/api/15077586/v1/centers?serviceKey=8wT9G7eD%2BJCQbT%2FxtyXjoAXk9bdAOc9qQ7063cXg2pAuwt3OUxM3vo4xR%2Bw%2BCrtHN%2B48iZCTEQkSla3rAmX3ig%3D%3D";
   var url = Uri.https(
     "api.odcloud.kr",
-    '/api/15077586/v1/centers?serviceKey=8wT9G7eD%2BJCQbT%2FxtyXjoAXk9bdAOc9qQ7063cXg2pAuwt3OUxM3vo4xR%2Bw%2BCrtHN%2B48iZCTEQkSla3rAmX3ig%3D%3D',
-    //   {'serviceKey': '''8wT9G7eD%2BJCQbT%2FxtyXjoAXk9bdAOc9qQ7063cXg2pAuwt3OUxM3vo4xR%2Bw%2BCrtHN%2B48iZCTEQkSla3rAmX3ig%3D%3D''',
-    // "page" : "1",
-    // "perPage" : "10"},
+    '/api/15077586/v1/centers?serviceKey=${ApiKey.API_KEY}',
   );
   print(url.toString());
   // var url = 'https://example.com/whatsit/create';
