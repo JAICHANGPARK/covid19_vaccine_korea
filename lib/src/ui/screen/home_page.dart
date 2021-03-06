@@ -37,7 +37,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Spacer(),
                   IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.settings_outlined))
+                  IconButton(onPressed: () {
+                    Navigator.of(context).pushNamed("/setting");
+
+                  }, icon: Icon(Icons.settings_outlined))
                 ],
               ),
               Padding(
@@ -120,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                   minWidth: double.infinity,
                   child: Center(child: Text("코로나19백신 및 예방접종", style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black
+                    color: MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white
                   ),)),),
               ),
             ],
