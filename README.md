@@ -1,4 +1,4 @@
-# covid_19_vaccine_korea
+# covid19_vaccine_korea
 
 <div style="text-align: center">
   <table>
