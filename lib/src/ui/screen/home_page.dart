@@ -2,6 +2,8 @@ import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
 import 'package:flutter/material.dart';
 
+import 'web_view_page.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -37,10 +39,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Spacer(),
                   IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
-                  IconButton(onPressed: () {
-                    Navigator.of(context).pushNamed("/setting");
-
-                  }, icon: Icon(Icons.settings_outlined))
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/setting");
+                      },
+                      icon: Icon(Icons.settings_outlined))
                 ],
               ),
               Padding(
@@ -118,13 +121,24 @@ class _HomePageState extends State<HomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: MaterialButton(onPressed: (){},
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => WebViewPage(
+                        "https://ncv.kdca.go.kr/",
+                    "코로나19백신 및 예방접종")));
+                  },
                   color: Theme.of(context).accentColor,
                   minWidth: double.infinity,
-                  child: Center(child: Text("코로나19백신 및 예방접종", style: TextStyle(
-                    fontSize: 16,
-                    color: MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white
-                  ),)),),
+                  child: Center(
+                      child: Text(
+                    "코로나19백신 및 예방접종",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color:
+                            MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white),
+                  )),
+                ),
               ),
             ],
           ),
