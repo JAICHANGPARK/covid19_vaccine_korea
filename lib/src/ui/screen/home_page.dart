@@ -1,5 +1,7 @@
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
+import 'package:covid_19_vaccine_korea/src/ui/screen/map_page.dart';
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
@@ -14,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  VaccineCenter? _vaccineCenter;
   @override
   void initState() {
     super.initState();
@@ -40,7 +43,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Spacer(),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
+                  IconButton(onPressed: () {
+                    if(_vaccineCenter != null){
+
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)
+                      => MapPage(vaccineCenter: _vaccineCenter)));
+                    }
+
+
+
+                  }, icon: Icon(Icons.map_outlined)),
                   IconButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed("/setting");
@@ -61,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       VaccineCenter? vaccineCenter = snapshot.data;
+                      _vaccineCenter = vaccineCenter;
                       if (vaccineCenter == null) {
                         return Center(
                           child: Column(
@@ -87,9 +100,12 @@ class _HomePageState extends State<HomePage> {
                                       context: context,
                                       backgroundColor: Colors.transparent,
                                       builder: (context) {
+                                        double _lat = double.parse(vaccineCenter.data![index].lat!);
+                                        double _lng = double.parse(vaccineCenter.data![index].lng!);
+                                        Fimber.d("$_lat / $_lng");
                                         return Container(
                                           decoration: BoxDecoration(
-                                              color: Colors.white, borderRadius: BorderRadius.circular(24)),
+                                              color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(24)),
                                           height: MediaQuery.of(context).size.height / 1.3,
                                           child: SingleChildScrollView(
                                             child: Column(
@@ -113,8 +129,12 @@ class _HomePageState extends State<HomePage> {
                                                         },
                                                         icon: Icon(Icons.clear))),
 
-                                                SizedBox(
-                                                  height: 16,
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                                  child: Text(
+                                                    "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
+                                                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                                  ),
                                                 ),
                                                 Container(
                                                   margin: EdgeInsets.symmetric(horizontal: 16),
@@ -124,8 +144,9 @@ class _HomePageState extends State<HomePage> {
                                                       color: Colors.grey, borderRadius: BorderRadius.circular(16)),
                                                   child: FlutterMap(
                                                     options: MapOptions(
-                                                      center: LatLng(51.5, -0.09),
-                                                      zoom: 13.0,
+                                                      center: LatLng(_lng, _lat),
+                                                      zoom: 15.0,
+                                                      maxZoom: 18.0
                                                     ),
                                                     layers: [
                                                       TileLayerOptions(
@@ -135,17 +156,44 @@ class _HomePageState extends State<HomePage> {
                                                       MarkerLayerOptions(
                                                         markers: [
                                                           Marker(
-                                                            width: 80.0,
-                                                            height: 80.0,
-                                                            point: LatLng(51.5, -0.09),
+                                                            point:  LatLng(_lng, _lat),
                                                             builder: (ctx) =>
                                                                 Container(
-                                                                  child: FlutterLogo(),
+                                                                  child: Icon(
+                                                                    Icons.location_pin,
+                                                                    size: 32,
+                                                                    color: Colors.green,
+                                                                  ),
                                                                 ),
                                                           ),
                                                         ],
                                                       ),
                                                     ],
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(12.0),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text("정보",style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                          fontSize: 12
+                                                    ),),
+                                                        Text("센터명: ${vaccineCenter.data?[index].centerName}",
+                                                        style: TextStyle(
+
+                                                        ),),
+                                                        Text("시설명: ${vaccineCenter.data?[index].facilityName}",
+                                                          style: TextStyle(
+
+                                                          ),),
+                                                        Text("주소: ${vaccineCenter.data?[index].address}"),
+                                                        Text("우편번호: ${vaccineCenter.data?[index].zipCode}"),
+                                                      ],
+                                                    ),
                                                   ),
                                                 )
                                               ],
