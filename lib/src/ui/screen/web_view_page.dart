@@ -1,21 +1,22 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 class WebViewPage extends StatefulWidget {
   final String url;
-  WebViewPage(this.url);
+  final String title;
+
+  WebViewPage(this.url, this.title);
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
 }
 
 class _WebViewPageState extends State<WebViewPage> {
-  final Completer<WebViewController> _controller =
-  Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
 
   @override
   void initState() {
@@ -27,7 +28,13 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter WebView example'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+
+        title: Text(widget.title,style: TextStyle(
+          color: Colors.black
+        ),),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
           // NavigationControls(_controller.future),
@@ -38,30 +45,30 @@ class _WebViewPageState extends State<WebViewPage> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://flutter.dev',
+          initialUrl: widget.url,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);
           },
           onProgress: (int progress) {
-            print("WebView is loading (progress : $progress%)");
+            Fimber.d(">>> WebView is loading (progress : $progress%)");
           },
           javascriptChannels: <JavascriptChannel>{
             // _toasterJavascriptChannel(context),
           },
           navigationDelegate: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              print('blocking navigation to $request}');
-              return NavigationDecision.prevent;
-            }
-            print('allowing navigation to $request');
+            // if (request.url.startsWith('https://www.youtube.com/')) {
+            //   Fimber.d('blocking navigation to $request}');
+            //   return NavigationDecision.prevent;
+            // }
+            Fimber.d('allowing navigation to $request');
             return NavigationDecision.navigate;
           },
           onPageStarted: (String url) {
-            print('Page started loading: $url');
+            Fimber.d('Page started loading: $url');
           },
           onPageFinished: (String url) {
-            print('Page finished loading: $url');
+            Fimber.d('Page finished loading: $url');
           },
           gestureNavigationEnabled: true,
         );
@@ -69,5 +76,4 @@ class _WebViewPageState extends State<WebViewPage> {
       // floatingActionButton: favoriteButton(),
     );
   }
-
 }
