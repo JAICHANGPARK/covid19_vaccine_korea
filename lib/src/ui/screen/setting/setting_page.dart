@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -6,6 +7,29 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+   String? appName ;
+   String? packageName;
+   String? version ;
+   String? buildNumber ;
+  Future getPackageInfo()async{
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+     appName = packageInfo.appName;
+     packageName = packageInfo.packageName;
+     version = packageInfo.version;
+     buildNumber = packageInfo.buildNumber;
+
+     setState(() {
+
+     });
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPackageInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +59,20 @@ class _SettingPageState extends State<SettingPage> {
               PhysicalModel(
                 color: Colors.grey,
                 child: Container(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   child: Column(
                     children: [
                       ListTile(
+                        onTap: (){
+                        },
+                        title: Text("정보제공기관"),
+                        trailing: Text("공공데이터활용지원센터"),
+
+                      ),
+                      Divider(height: 8,),
+                      ListTile(
                         title: Text("버전 정보"),
+                        trailing: Text(version ?? ""),
                       ),
                       Divider(height: 8,),
                       ListTile(
@@ -47,7 +80,9 @@ class _SettingPageState extends State<SettingPage> {
                           showLicensePage(context: context);
                         },
                         title: Text("오픈소스 라이선스"),
-                      )
+                      ),
+
+
                     ],
                   ),
                 ),
@@ -59,4 +94,5 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
+
 }
