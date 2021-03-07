@@ -30,6 +30,10 @@ dependencies:
   webview_flutter: ^2.0.2
   package_info: ^2.0.0
 
+  flutter_map: any
+#  latlng: any
+#  location: ^4.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
