@@ -37,8 +37,7 @@ class _WebViewPageState extends State<WebViewPage> {
         ),),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
-          // NavigationControls(_controller.future),
-          // SampleMenu(_controller.future),
+
         ],
       ),
       // We're using a Builder here so we have a context that is below the Scaffold
