@@ -1,6 +1,8 @@
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong/latlong.dart';
 
 import 'web_view_page.dart';
 
@@ -77,25 +79,101 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Card(
                               elevation: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                        ),
-                                        Spacer(),
-                                        Text("${vaccineCenter.data?[index].sido}")
-                                      ],
-                                    ),
-                                    Text("${vaccineCenter.data?[index].centerName}"),
-                                    Text("${vaccineCenter.data?[index].facilityName}"),
-                                    Text("${vaccineCenter.data?[index].address}"),
-                                  ],
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      enableDrag: false,
+                                      context: context,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (context) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white, borderRadius: BorderRadius.circular(24)),
+                                          height: MediaQuery.of(context).size.height / 1.3,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+                                                // Container(
+                                                //   height: 4,
+                                                //   width: 32,
+                                                //   decoration: BoxDecoration(
+                                                //     color: Colors.grey,
+                                                //     borderRadius: BorderRadius.circular(16),
+                                                //   ),
+                                                // ),
+                                                Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        icon: Icon(Icons.clear))),
+
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.symmetric(horizontal: 16),
+                                                  height: MediaQuery.of(context).size.height / 3,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey, borderRadius: BorderRadius.circular(16)),
+                                                  child: FlutterMap(
+                                                    options: MapOptions(
+                                                      center: LatLng(51.5, -0.09),
+                                                      zoom: 13.0,
+                                                    ),
+                                                    layers: [
+                                                      TileLayerOptions(
+                                                          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                                          subdomains: ['a', 'b', 'c']
+                                                      ),
+                                                      MarkerLayerOptions(
+                                                        markers: [
+                                                          Marker(
+                                                            width: 80.0,
+                                                            height: 80.0,
+                                                            point: LatLng(51.5, -0.09),
+                                                            builder: (ctx) =>
+                                                                Container(
+                                                                  child: FlutterLogo(),
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                          ),
+                                          Spacer(),
+                                          Text("${vaccineCenter.data?[index].sido}")
+                                        ],
+                                      ),
+                                      Text("${vaccineCenter.data?[index].centerName}"),
+                                      Text("${vaccineCenter.data?[index].facilityName}"),
+                                      Text("${vaccineCenter.data?[index].address}"),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -123,10 +201,8 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: MaterialButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => WebViewPage(
-                        "https://ncv.kdca.go.kr/",
-                    "코로나19백신 및 예방접종")));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => WebViewPage("https://ncv.kdca.go.kr/", "코로나19백신 및 예방접종")));
                   },
                   color: Theme.of(context).accentColor,
                   minWidth: double.infinity,
