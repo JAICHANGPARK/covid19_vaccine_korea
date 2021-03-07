@@ -15,7 +15,7 @@ Future<VaccineCenter?> fetchVaccineCenter() async {
       Fimber.d('Number of books about http: $jsonResponse.');
       VaccineCenter vaccineCenter = VaccineCenter.fromJson(jsonDecode(response.toString()));
       // var itemCount = jsonResponse['totalItems'];
-      print(vaccineCenter.currentCount);
+      Fimber.d(">>> ${vaccineCenter.currentCount}");
       return vaccineCenter;
     } else {
       Fimber.d('Request failed with status: ${response.statusCode}.');
