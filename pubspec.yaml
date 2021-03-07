@@ -28,6 +28,7 @@ dependencies:
   fimber: ^0.6.1
   sliding_up_panel: ^1.0.2
   webview_flutter: ^2.0.2
+  package_info: ^2.0.0
 
 dev_dependencies:
   flutter_test:
