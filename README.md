@@ -4,7 +4,7 @@
   <table>
     <tr>
 <td style="text-align: center">
-    <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_20210306_223928.png" width="200"/>
+    <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_1615087698.png" width="200"/>
 </td>
 <td style="text-align: center">
     <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_1615087704.png" width="200"/>
