@@ -1,5 +1,9 @@
 name: covid_19_vaccine_korea
-description: A new Flutter application.
+description: A Flutter application.
+authors:
+  - Park Jai-Chang <aristojeff@gmail.com>
+
+homepage: https://github.com/JAICHANGPARK/covid19_vaccine_korea
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
