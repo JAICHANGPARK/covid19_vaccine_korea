@@ -65,6 +65,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 controller: _tabController,
                 labelColor: Colors.blueAccent,
                 unselectedLabelColor: Colors.grey,
+                indicatorSize: TabBarIndicatorSize.label,
+                isScrollable: true,
                 tabs: [
                   Tab(
                     text: "기록",
@@ -79,7 +81,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               Expanded(
                 child: TabBarView(controller: _tabController, children: [
-                  Container(),
+                  Stack(
+                    children: [Positioned(bottom: 16, left: 0, right: 0, child: Center(child: Container(
+                      height: 84,
+                      width: 84,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.circle,
+
+                      ),
+
+                    )))],
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
