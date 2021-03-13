@@ -1,3 +1,4 @@
+import 'package:covid_19_vaccine_korea/src/db/object/note.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'src/ui/screen/main_app.dart';
 
 Future<void> initHive()async {
   await Hive.initFlutter();
-
+  Hive.registerAdapter(NoteAdapter());
 }
 
 void main() {
