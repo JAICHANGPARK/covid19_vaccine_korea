@@ -1,6 +1,8 @@
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
 import 'package:covid_19_vaccine_korea/src/ui/screen/map_page.dart';
+import 'package:covid_19_vaccine_korea/src/ui/screen/note/new_note_page.dart';
+import 'package:covid_19_vaccine_korea/src/ui/widgets/note_record_widget.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -63,7 +65,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               TabBar(
                 controller: _tabController,
-                labelColor: Theme.of(context).accentColor,
+                labelColor: Theme
+                    .of(context)
+                    .accentColor,
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.label,
                 isScrollable: true,
@@ -83,14 +87,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 child: TabBarView(controller: _tabController, children: [
                   Stack(
                     children: [
+                      Positioned(child: NoteRecordWidget(),
+
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: 0,),
                       Positioned(
                         bottom: 16,
                         left: 0,
                         right: 0,
                         child: Center(
                           child: GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               Fimber.d(">>> Touch Add Button");
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                  NewNotePage()
+                              ));
                             },
                             child: PhysicalModel(
                               color: Colors.grey,
@@ -100,7 +113,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 height: 84,
                                 width: 84,
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme
+                                      .of(context)
+                                      .accentColor,
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(Icons.add, size: 58, color: Colors.white,),
@@ -159,9 +174,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                 Fimber.d("$_lat / $_lng");
                                                 return Container(
                                                   decoration: BoxDecoration(
-                                                      color: Theme.of(context).cardColor,
+                                                      color: Theme
+                                                          .of(context)
+                                                          .cardColor,
                                                       borderRadius: BorderRadius.circular(24)),
-                                                  height: MediaQuery.of(context).size.height / 1.3,
+                                                  height: MediaQuery
+                                                      .of(context)
+                                                      .size
+                                                      .height / 1.3,
                                                   child: SingleChildScrollView(
                                                     child: Column(
                                                       children: [
@@ -187,13 +207,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                         Padding(
                                                           padding: const EdgeInsets.symmetric(vertical: 16),
                                                           child: Text(
-                                                            "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
+                                                            "${vaccineCenter.data ? [index].org != "" ? "${vaccineCenter
+                                                                .data ? [index].org}" : "정보 없음"}",
                                                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                                                           ),
                                                         ),
                                                         Container(
                                                           margin: EdgeInsets.symmetric(horizontal: 16),
-                                                          height: MediaQuery.of(context).size.height / 3,
+                                                          height: MediaQuery
+                                                              .of(context)
+                                                              .size
+                                                              .height / 3,
                                                           width: double.infinity,
                                                           decoration: BoxDecoration(
                                                               color: Colors.grey,
@@ -204,19 +228,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                             layers: [
                                                               TileLayerOptions(
                                                                   urlTemplate:
-                                                                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                                                                   subdomains: ['a', 'b', 'c']),
                                                               MarkerLayerOptions(
                                                                 markers: [
                                                                   Marker(
                                                                     point: LatLng(_lng, _lat),
-                                                                    builder: (ctx) => Container(
-                                                                      child: Icon(
-                                                                        Icons.location_pin,
-                                                                        size: 32,
-                                                                        color: Colors.green,
-                                                                      ),
-                                                                    ),
+                                                                    builder: (ctx) =>
+                                                                        Container(
+                                                                          child: Icon(
+                                                                            Icons.location_pin,
+                                                                            size: 32,
+                                                                            color: Colors.green,
+                                                                          ),
+                                                                        ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -236,15 +261,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                                       fontWeight: FontWeight.bold, fontSize: 12),
                                                                 ),
                                                                 Text(
-                                                                  "센터명: ${vaccineCenter.data?[index].centerName}",
+                                                                  "센터명: ${vaccineCenter.data ? [index].centerName}",
                                                                   style: TextStyle(),
                                                                 ),
                                                                 Text(
-                                                                  "시설명: ${vaccineCenter.data?[index].facilityName}",
+                                                                  "시설명: ${vaccineCenter.data ? [index].facilityName}",
                                                                   style: TextStyle(),
                                                                 ),
-                                                                Text("주소: ${vaccineCenter.data?[index].address}"),
-                                                                Text("우편번호: ${vaccineCenter.data?[index].zipCode}"),
+                                                                Text("주소: ${vaccineCenter.data ? [index].address}"),
+                                                                Text("우편번호: ${vaccineCenter.data ? [index].zipCode}"),
                                                               ],
                                                             ),
                                                           ),
@@ -263,16 +288,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                               Row(
                                                 children: [
                                                   Text(
-                                                    "${vaccineCenter.data?[index].org != "" ? "${vaccineCenter.data?[index].org}" : "정보 없음"}",
+                                                    "${vaccineCenter.data ? [index].org != "" ? "${vaccineCenter.data
+                                                        ? [index].org}" : "정보 없음"}",
                                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                                   ),
                                                   Spacer(),
-                                                  Text("${vaccineCenter.data?[index].sido}")
+                                                  Text("${vaccineCenter.data ? [index].sido}")
                                                 ],
                                               ),
-                                              Text("${vaccineCenter.data?[index].centerName}"),
-                                              Text("${vaccineCenter.data?[index].facilityName}"),
-                                              Text("${vaccineCenter.data?[index].address}"),
+                                              Text("${vaccineCenter.data ? [index].centerName}"),
+                                              Text("${vaccineCenter.data ? [index].facilityName}"),
+                                              Text("${vaccineCenter.data ? [index].address}"),
                                             ],
                                           ),
                                         ),
@@ -305,17 +331,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => WebViewPage("https://ncv.kdca.go.kr/", "코로나19백신 및 예방접종")));
                           },
-                          color: Theme.of(context).accentColor,
+                          color: Theme
+                              .of(context)
+                              .accentColor,
                           minWidth: double.infinity,
                           child: Center(
                               child: Text(
-                            "코로나19백신 및 예방접종",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: MediaQuery.of(context).platformBrightness == Brightness.dark
-                                    ? Colors.black
-                                    : Colors.white),
-                          )),
+                                "코로나19백신 및 예방접종",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: MediaQuery
+                                        .of(context)
+                                        .platformBrightness == Brightness.dark
+                                        ? Colors.black
+                                        : Colors.white),
+                              )),
                         ),
                       ),
                     ],
