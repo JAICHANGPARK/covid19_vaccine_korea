@@ -30,16 +30,25 @@ dependencies:
   firebase_core: ^1.0.1
   shared_preferences: any
 
+  hive: ^2.0.0
+  hive_flutter: ^1.0.0
+
 #  latlng: any
 #  location: ^4.0.2
 
 dev_dependencies:
+
+  hive_generator: ^1.0.0
+  build_runner: ^1.12.1
+
   flutter_test:
     sdk: flutter
 
 flutter:
 
   uses-material-design: true
+  assets:
+    - assets/img/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
