@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               TabBar(
                 controller: _tabController,
-                labelColor: Colors.blueAccent,
+                labelColor: Theme.of(context).accentColor,
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.label,
                 isScrollable: true,
@@ -82,16 +82,34 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               Expanded(
                 child: TabBarView(controller: _tabController, children: [
                   Stack(
-                    children: [Positioned(bottom: 16, left: 0, right: 0, child: Center(child: Container(
-                      height: 84,
-                      width: 84,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        shape: BoxShape.circle,
-
-                      ),
-
-                    )))],
+                    children: [
+                      Positioned(
+                        bottom: 16,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: (){
+                              Fimber.d(">>> Touch Add Button");
+                            },
+                            child: PhysicalModel(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                              elevation: 5,
+                              child: Container(
+                                height: 84,
+                                width: 84,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(Icons.add, size: 58, color: Colors.white,),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
