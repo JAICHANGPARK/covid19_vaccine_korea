@@ -51,6 +51,20 @@ class _NoteRecordWidgetState extends State<NoteRecordWidget> {
             child: ListView.builder(
               itemCount: noteItems!.length,
               itemBuilder: (context, index) {
+                return Card(
+                  elevation: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${noteItems![index].created.toString().split(".").first}"),
+                        Text("${noteItems![index].symptom ?? "증상 없음."}"),
+                        Text("${noteItems![index].description ?? "상세 기록 없음."}")
+                      ],
+                    ),
+                  ),
+                );
                 return Text("${noteItems![index].created.toString()}: ${noteItems![index].symptom}");
               },
             ),
