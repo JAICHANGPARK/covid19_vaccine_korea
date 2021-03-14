@@ -3,6 +3,8 @@ import 'package:covid_19_vaccine_korea/src/db/db.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
+import '../web_view_page.dart';
+
 class SettingPage extends StatefulWidget {
   @override
   _SettingPageState createState() => _SettingPageState();
@@ -71,6 +73,13 @@ class _SettingPageState extends State<SettingPage> {
                         trailing: Text("공공데이터활용지원센터"),
 
                       ),
+                      ListTile(
+                        onTap: (){
+                        },
+                        title: Text(""),
+                        trailing: Text("질병관리청"),
+
+                      ),
                       Divider(height: 8,),
                       ListTile(
                         title: Text("버전 정보"),
@@ -83,7 +92,15 @@ class _SettingPageState extends State<SettingPage> {
                         },
                         title: Text("오픈소스 라이선스"),
                       ),
-
+                      Divider(height: 8,),
+                      ListTile(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  WebViewPage("https://github.com/JAICHANGPARK", "개발자페이지")));
+                        },
+                        title: Text("개발자 페이지"),
+                      ),
 
                     ],
                   ),
