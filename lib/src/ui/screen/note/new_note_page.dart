@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:covid_19_vaccine_korea/src/db/db.dart';
 import 'package:covid_19_vaccine_korea/src/db/object/note.dart';
 import 'package:fimber/fimber.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../../main.dart';
+import 'dart:ui';
 
 /// 기침
 // 인후통
@@ -22,11 +27,73 @@ class NewNotePage extends StatefulWidget {
 }
 
 class _NewNotePageState extends State<NewNotePage> {
+  double _kFontSize = 32.0;
+  double _kHeight = 2.0;
+  late double _kLineHeight;
+  late double _kInitialHeight;
+  GlobalKey _textFieldKey = GlobalKey();
+  TextEditingController _controller = TextEditingController();
+  late double lastKnownHeight = _kInitialHeight;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // WidgetsBinding.instance!.addPostFrameCallback((_) => _setLastKnownHeight());
+    super.initState();
+    _kLineHeight = _kFontSize * _kHeight;
+    _kInitialHeight = _kLineHeight * 5;
+
+    // Wait for all widgets to be drawn before trying to draw lines again
+  }
+
+  // void _setLastKnownHeight() {
+  //   final RenderObject? renderBoxRed = _textFieldKey.currentContext!.findRenderObject();
+  //   // var size;
+  //   // final size = renderBoxRed!.size;
+  //
+  //   if (lastKnownHeight != size.height) {
+  //     WidgetsBinding.instance!.addPostFrameCallback((_) {
+  //       // Causes the widget to rebuild
+  //       // (so the lines get redrawn)
+  //       setState(() {
+  //         lastKnownHeight = size.height;
+  //       });
+  //     });
+  //   }
+  // }
+  Widget _buildLines() {
+    // Calculate the number of lines that need to be built
+    int nLines = max(_kInitialHeight, lastKnownHeight) ~/ _kLineHeight;
+
+    // Draw the lines (which are just containers with a bottom border)
+    return Column(
+        children: List.generate(
+            nLines,
+            (index) => Container(
+                  decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[400]!))),
+                  height: _kLineHeight,
+                )));
+  }
+
+  InputDecoration _inputDecoration() {
+    return InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        errorBorder: InputBorder.none);
+  }
+
+  bool checkVal0 = false;
+  bool checkVal1 = false;
+  bool checkVal2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () async{
+        onPressed: () async {
           int? index = await getIt.get<AppDBProvider>().addNote(Note()
             ..title = "Test"
             ..created = DateTime.now()
@@ -34,6 +101,113 @@ class _NewNotePageState extends State<NewNotePage> {
           Fimber.d(">>> index : $index");
         },
       ),
+      body: SafeArea(
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("${DateTime.now().toString().split(" ").first}", style: TextStyle(
+                      fontSize: 24
+                    ),),
+                  ),
+                  Wrap(
+
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    // direction: Axis.vertical,
+                    spacing: 4,
+                    children: [
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("기침"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("인후통"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("두통"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("근육통"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("가래"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("피로감"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("설사"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("콧물"),
+                      Checkbox(
+                          value: checkVal0,
+                          onChanged: (b) {
+                            setState(() {
+                              checkVal0 = b!;
+                            });
+                          }),
+                      Text("복통"),
+                    ],
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: TextField(
+                      textAlign: TextAlign.start,
+                      textAlignVertical: TextAlignVertical.top,
+                      expands: true,
+                      controller: _controller,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                    ),
+                  ),
+                ],
+              ))),
     );
   }
 }
