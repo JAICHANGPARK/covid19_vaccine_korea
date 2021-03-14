@@ -85,22 +85,31 @@ class _NewNotePageState extends State<NewNotePage> {
         errorBorder: InputBorder.none);
   }
 
-  bool checkVal0 = false;
-  bool checkVal1 = false;
-  bool checkVal2 = false;
+  bool checkVal0 = false,
+      checkVal1 = false,
+      checkVal2 = false,
+      checkVal3 = false,
+      checkVal4 = false,
+      checkVal5 = false,
+      checkVal6 = false,
+      checkVal7 = false,
+      checkVal8 = false,
+      checkVal9 = false;
+
+  List<String> symptomList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          int? index = await getIt.get<AppDBProvider>().addNote(Note()
-            ..title = "Test"
-            ..created = DateTime.now()
-            ..description = "test test");
-          Fimber.d(">>> index : $index");
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     int? index = await getIt.get<AppDBProvider>().addNote(Note()
+      //       ..title = "Test"
+      //       ..created = DateTime.now()
+      //       ..description = "test test");
+      //     Fimber.d(">>> index : $index");
+      //   },
+      // ),
       body: SafeArea(
           child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -109,12 +118,53 @@ class _NewNotePageState extends State<NewNotePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("${DateTime.now().toString().split(" ").first}", style: TextStyle(
-                      fontSize: 24
-                    ),),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${DateTime.now().toString().split(" ").first}",
+                              style: TextStyle(fontSize: 24),
+                            ),
+                          ],
+                        ),
+                        TextButton.icon(
+                            onPressed: () async {
+                              if(symptomList.length > 0 || _controller.text.length > 0){
+                                String _symptom = "";
+                                if (symptomList.length > 0) {
+                                  symptomList.forEach((element) {
+                                    _symptom += element;
+                                    _symptom += ",";
+                                  });
+                                }
+                                print(_symptom);
+                                print(symptomList);
+                                int? index = await getIt.get<AppDBProvider>().addNote(Note()
+                                  ..title = "${DateTime.now().toString()}"
+                                  ..symptom = _symptom
+                                  ..created = DateTime.now()
+                                  ..description = _controller.text);
+                                Fimber.d(">>> index : $index");
+                                Navigator.of(context).pop();
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("내용을 입력해주세요")));
+                              }
+
+                            },
+                            icon: Icon(Icons.save_alt_outlined),
+                            label: Text("저장하기"))
+                      ],
+                    ),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("증상"),
                   ),
                   Wrap(
-
                     direction: Axis.horizontal,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     // direction: Axis.vertical,
@@ -123,76 +173,126 @@ class _NewNotePageState extends State<NewNotePage> {
                       Checkbox(
                           value: checkVal0,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("기침");
+                            } else {
+                              symptomList.removeWhere((e) => e == "기침");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal0 = b;
                             });
                           }),
                       Text("기침"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal1,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("인후통");
+                            } else {
+                              symptomList.removeWhere((e) => e == "인후통");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal1 = b;
                             });
                           }),
                       Text("인후통"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal2,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("두통");
+                            } else {
+                              symptomList.removeWhere((e) => e == "두통");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal2 = b;
                             });
                           }),
                       Text("두통"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal3,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("근육통");
+                            } else {
+                              symptomList.removeWhere((e) => e == "근육통");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal3 = b;
                             });
                           }),
                       Text("근육통"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal4,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("가래");
+                            } else {
+                              symptomList.removeWhere((e) => e == "가래");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal4 = b;
                             });
                           }),
                       Text("가래"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal5,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("피로감");
+                            } else {
+                              symptomList.removeWhere((e) => e == "피로감");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal5 = b;
                             });
                           }),
                       Text("피로감"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal6,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("설사");
+                            } else {
+                              symptomList.removeWhere((e) => e == "설사");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal6 = b;
                             });
                           }),
                       Text("설사"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal7,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("콧물");
+                            } else {
+                              symptomList.removeWhere((e) => e == "콧물");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal7 = b;
                             });
                           }),
                       Text("콧물"),
                       Checkbox(
-                          value: checkVal0,
+                          value: checkVal8,
                           onChanged: (b) {
+                            if (b!) {
+                              symptomList.add("복통");
+                            } else {
+                              symptomList.removeWhere((e) => e == "복통");
+                            }
                             setState(() {
-                              checkVal0 = b!;
+                              checkVal8 = b;
                             });
                           }),
                       Text("복통"),
                     ],
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("기록"),
                   ),
                   Expanded(
                     flex: 8,
