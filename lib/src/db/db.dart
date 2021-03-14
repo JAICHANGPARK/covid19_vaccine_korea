@@ -35,4 +35,9 @@ class AppDBProvider extends ChangeNotifier {
       return 0;
     }
   }
+
+  Future<int?> clearDatabase() async{
+    int? result = await _noteBox?.clear();
+    return result;
+  }
 }
