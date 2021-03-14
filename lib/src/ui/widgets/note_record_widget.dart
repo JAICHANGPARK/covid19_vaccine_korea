@@ -36,25 +36,51 @@ class _NoteRecordWidgetState extends State<NoteRecordWidget> {
     super.dispose();
   }
 
+  Future<void> refreshItemList() async {
+    if (noteItems!.length > 0) noteItems!.clear();
+    setState(() {
+      noteItems = getIt.get<AppDBProvider>().noteBox?.values.toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return noteItems!.length > 0
-        ? ListView.builder(
-            itemCount: noteItems!.length,
-            itemBuilder: (context, index) {
-              return Text("${noteItems![index].created.toString()}: ${noteItems![index].symptom}");
-            },
+        ? RefreshIndicator(
+            onRefresh: refreshItemList,
+            child: ListView.builder(
+              itemCount: noteItems!.length,
+              itemBuilder: (context, index) {
+                return Text("${noteItems![index].created.toString()}: ${noteItems![index].symptom}");
+              },
+            ),
           )
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               isLoading
-                  ? Container()
+                  ? Column(
+                      children: [
+                        Image.asset(
+                          "assets/img/business-3d.png",
+                          width: MediaQuery.of(context).size.width / 1.5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text("일지 기록이 없습니다."),
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              refreshItemList();
+                            },
+                            child: Text("새로고침"))
+                      ],
+                    )
                   : Center(
                       child: Column(
                       children: [CircularProgressIndicator(), Text("불러오는 중.")],
-                    ))
+                    )),
             ],
           );
   }
