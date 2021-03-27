@@ -105,14 +105,33 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         itemBuilder: (context, index){
                           Data? d = _vaccineCount?.data?[index];
                           return Card(
-                            child: Column(
-                              children: [
-                                    Text("${d?.sido}"),
-                              ],
+                            elevation: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                      Text("${d?.sido}",style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold
+                                      ),),
+                                  Text("1회차 전일누적: ${d?.accumulatedFirstCnt} 명", style: TextStyle(
+                                    fontSize: 12
+                                  ),),
+                                  Text("1회차 전일실적: ${d?.firstCnt} 명", style: TextStyle(
+                                      fontSize: 12
+                                  ),),
+                                  Text("1회차 당일누적: ${d?.totalFirstCnt}명", style: TextStyle(
+                                      fontSize: 12, fontWeight: FontWeight.bold
+                                  ),),
+                                ],
+                              ),
                             ),
                           );
                         }) : Center(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircularProgressIndicator(),
                           Padding(
