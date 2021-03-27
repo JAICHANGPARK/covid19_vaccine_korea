@@ -59,7 +59,7 @@ Future fetchVaccineCount(int start, int endPage, String? baseDate) async {
 }
 
 Future fetchVaccineCountBySido(int start, int endPage, String sido) async {
-  
+
   var response = await http
       .get("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5Bsido%3A%3AEQ%5D=$sido&serviceKey=${ApiKey.API_KEY_2}");
