@@ -1,6 +1,7 @@
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
+import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
-import 'package:covid_19_vaccine_korea/src/ui/screen/map_page.dart';
+import 'maps/map_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/screen/note/new_note_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/widgets/note_record_widget.dart';
 import 'package:covid_19_vaccine_korea/src/ui/widgets/qa_list_widget.dart';
@@ -22,12 +23,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   VaccineCenter? _vaccineCenter;
   late TabController _tabController;
-
+  VaccineCount? _vaccineCount;
   @override
   void initState() {
     super.initState();
+    print(">>> $_vaccineCount");
     String todayDateFormat = DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
-    fetchVaccineCount(1, 100, todayDateFormat);
+    fetchVaccineCount(1, 100, todayDateFormat).then((value) {
+
+      setState(() {
+        _vaccineCount = value;
+      });
+    });
     _tabController = TabController(length: 4, vsync: this);
     // fetchVaccineCenter();
   }
@@ -92,10 +99,30 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 child: TabBarView(
                     controller: _tabController, children: [
                   Container(
-                    child: ListView.builder(itemBuilder: (context, index){
-                      return ListTile();
-                    }),
-                  ),
+                    child: _vaccineCount != null ? GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                        itemCount: _vaccineCount?.data?.length,
+                        itemBuilder: (context, index){
+                          Data? d = _vaccineCount?.data?[index];
+                          return Card(
+                            child: Column(
+                              children: [
+                                    Text("${d?.sido}"),
+                              ],
+                            ),
+                          );
+                        }) : Center(
+                      child: Column(
+                        children: [
+                          CircularProgressIndicator(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("정보 불러오는중"),
+                          )
+                        ],
+                      ),
+                    )
+                  ) ,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
