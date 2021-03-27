@@ -1,6 +1,8 @@
+import 'package:covid_19_vaccine_korea/src/db/db.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
+import '../../../main.dart';
 import 'maps/map_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/screen/note/new_note_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/widgets/note_record_widget.dart';
@@ -24,13 +26,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   VaccineCenter? _vaccineCenter;
   late TabController _tabController;
   VaccineCount? _vaccineCount;
+  String? todayDateFormat;
+
   @override
   void initState() {
     super.initState();
-    print(">>> $_vaccineCount");
-    String todayDateFormat = DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
+    todayDateFormat = DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
     fetchVaccineCount(1, 100, todayDateFormat).then((value) {
-
       setState(() {
         _vaccineCount = value;
       });
@@ -64,6 +66,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         if (_vaccineCenter != null) {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) => MapPage(vaccineCenter: _vaccineCenter)));
+                        } else {
+                          showDialog(
+                              builder: (context) => AlertDialog(
+                                    title: Text("알림"),
+                                    content: Text("예방접종 센터 탭을 선택하여 우선 확인해주세요."),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("확인"))
+                                    ],
+                                  ),
+                              context: context);
                         }
                       },
                       icon: Icon(Icons.map_outlined)),
@@ -96,52 +112,99 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ],
               ),
               Expanded(
-                child: TabBarView(
-                    controller: _tabController, children: [
-                  Container(
-                    child: _vaccineCount != null ? GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                        itemCount: _vaccineCount?.data?.length,
-                        itemBuilder: (context, index){
-                          Data? d = _vaccineCount?.data?[index];
-                          return Card(
-                            elevation: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                      Text("${d?.sido}",style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold
-                                      ),),
-                                  Text("1회차 전일누적: ${d?.accumulatedFirstCnt} 명", style: TextStyle(
-                                    fontSize: 12
-                                  ),),
-                                  Text("1회차 전일실적: ${d?.firstCnt} 명", style: TextStyle(
-                                      fontSize: 12
-                                  ),),
-                                  Text("1회차 당일누적: ${d?.totalFirstCnt}명", style: TextStyle(
-                                      fontSize: 12, fontWeight: FontWeight.bold
-                                  ),),
-                                ],
-                              ),
-                            ),
-                          );
-                        }) : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("정보 불러오는중"),
-                          )
-                        ],
-                      ),
-                    )
-                  ) ,
+                child: TabBarView(controller: _tabController, children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${todayDateFormat?.split(" ").first} 기준",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                              child: _vaccineCount != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: GridView.builder(
+                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 4,
+                                              mainAxisSpacing: 4,
+                                              childAspectRatio: 0.8),
+                                          itemCount: _vaccineCount?.data?.length,
+                                          itemBuilder: (context, index) {
+                                            Data? d = _vaccineCount?.data?[index];
+                                            return Card(
+                                              elevation: 2,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    Text(
+                                                      "${d?.sido}",
+                                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                    ),
+                                                    Divider(),
+                                                    Text(
+                                                      "1회차 전일누적: ${d?.accumulatedFirstCnt} 명",
+                                                      style: TextStyle(fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      "1회차 전일실적: ${d?.firstCnt} 명",
+                                                      style: TextStyle(fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      "1회차 당일누적: ${d?.totalFirstCnt}명",
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.blue),
+                                                    ),
+                                                    Divider(),
+                                                    Text(
+                                                      "2회차 전일누적: ${d?.accumulatedSecondCnt} 명",
+                                                      style: TextStyle(fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      "2회차 전일실적: ${d?.secondCnt} 명",
+                                                      style: TextStyle(fontSize: 12),
+                                                    ),
+                                                    Text(
+                                                      "2회차 당일누적: ${d?.totalSecondCnt}명",
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.green),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    )
+                                  : Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          CircularProgressIndicator(),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text("정보 불러오는중"),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                        ),
+                      ],
+                    ),
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -235,7 +298,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                             layers: [
                                                               TileLayerOptions(
                                                                   urlTemplate:
-                                                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                                                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                                                                   subdomains: ['a', 'b', 'c']),
                                                               MarkerLayerOptions(
                                                                 markers: [
@@ -340,13 +403,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           minWidth: double.infinity,
                           child: Center(
                               child: Text(
-                                "코로나19백신 및 예방접종",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: MediaQuery.of(context).platformBrightness == Brightness.dark
-                                        ? Colors.black
-                                        : Colors.white),
-                              )),
+                            "코로나19백신 및 예방접종",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                                    ? Colors.black
+                                    : Colors.white),
+                          )),
                         ),
                       ),
                     ],
@@ -393,7 +456,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       )
                     ],
                   ),
-
                   QAListWidget(),
                 ]),
               ),
