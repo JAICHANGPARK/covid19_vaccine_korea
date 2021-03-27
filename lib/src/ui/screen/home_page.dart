@@ -75,10 +75,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 isScrollable: true,
                 tabs: [
                   Tab(
-                    text: "기록",
+                    text: "예방접종현황",
                   ),
                   Tab(
                     text: "예방접종센터",
+                  ),
+                  Tab(
+                    text: "기록 및 일지",
                   ),
                   Tab(
                     text: "Q&A",
@@ -87,47 +90,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               Expanded(
                 child: TabBarView(controller: _tabController, children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                        child: NoteRecordWidget(),
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        top: 0,
-                      ),
-                      Positioned(
-                        bottom: 16,
-                        left: 0,
-                        right: 0,
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              Fimber.d(">>> Touch Add Button");
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewNotePage()));
-                            },
-                            child: PhysicalModel(
-                              color: Colors.grey,
-                              shape: BoxShape.circle,
-                              elevation: 5,
-                              child: Container(
-                                height: 84,
-                                width: 84,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.add,
-                                  size: 58,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                  Container(
+                    child: ListView.builder(itemBuilder: (context, index){}),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +186,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                             layers: [
                                                               TileLayerOptions(
                                                                   urlTemplate:
-                                                                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                                                                   subdomains: ['a', 'b', 'c']),
                                                               MarkerLayerOptions(
                                                                 markers: [
@@ -327,17 +291,60 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           minWidth: double.infinity,
                           child: Center(
                               child: Text(
-                            "코로나19백신 및 예방접종",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: MediaQuery.of(context).platformBrightness == Brightness.dark
-                                    ? Colors.black
-                                    : Colors.white),
-                          )),
+                                "코로나19백신 및 예방접종",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                                        ? Colors.black
+                                        : Colors.white),
+                              )),
                         ),
                       ),
                     ],
                   ),
+                  Stack(
+                    children: [
+                      Positioned(
+                        child: NoteRecordWidget(),
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        top: 0,
+                      ),
+                      Positioned(
+                        bottom: 16,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              Fimber.d(">>> Touch Add Button");
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewNotePage()));
+                            },
+                            child: PhysicalModel(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                              elevation: 5,
+                              child: Container(
+                                height: 84,
+                                width: 84,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  size: 58,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+
                   QAListWidget(),
                 ]),
               ),
