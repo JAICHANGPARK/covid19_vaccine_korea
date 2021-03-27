@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.initState();
     String todayDateFormat = DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
     fetchVaccineCount(1, 100, todayDateFormat);
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     // fetchVaccineCenter();
   }
 
@@ -75,10 +75,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 isScrollable: true,
                 tabs: [
                   Tab(
-                    text: "예방접종현황",
+                    text: "예방접종 현황",
                   ),
                   Tab(
-                    text: "예방접종센터",
+                    text: "예방접종 센터",
                   ),
                   Tab(
                     text: "기록 및 일지",
@@ -89,9 +89,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ],
               ),
               Expanded(
-                child: TabBarView(controller: _tabController, children: [
+                child: TabBarView(
+                    controller: _tabController, children: [
                   Container(
-                    child: ListView.builder(itemBuilder: (context, index){}),
+                    child: ListView.builder(itemBuilder: (context, index){
+                      return ListTile();
+                    }),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
