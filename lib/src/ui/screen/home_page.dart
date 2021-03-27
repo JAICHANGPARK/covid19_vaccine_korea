@@ -7,6 +7,7 @@ import 'package:covid_19_vaccine_korea/src/ui/widgets/qa_list_widget.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
 import 'web_view_page.dart';
@@ -25,6 +26,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
+    String todayDateFormat = DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
+    fetchVaccineCount(1, 100, todayDateFormat);
     _tabController = TabController(length: 3, vsync: this);
     // fetchVaccineCenter();
   }
