@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
+import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api_key.dart';
 import 'package:dio/dio.dart';
 import 'package:fimber/fimber.dart';
@@ -47,7 +48,7 @@ Future fetchVaccineCenterOld() async {
   }
 }
 
-Future fetchVaccineCount(int start, int endPage, String? baseDate) async {
+Future<VaccineCount?> fetchVaccineCount(int start, int endPage, String? baseDate) async {
   if(baseDate == null){
     baseDate =  DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
   }
@@ -55,14 +56,24 @@ Future fetchVaccineCount(int start, int endPage, String? baseDate) async {
       .get("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5BbaseDate%3A%3AEQ%5D=$baseDate&serviceKey=${ApiKey.API_KEY_2}");
   print(response.body);
-  if (response.statusCode == 200) {}
+  if (response.statusCode == 200) {
+    VaccineCount vaccineCount = VaccineCount.fromJson(jsonDecode(response.body));
+    return vaccineCount;
+  }else{
+    return null;
+  }
 }
 
-Future fetchVaccineCountBySido(int start, int endPage, String sido) async {
+Future<VaccineCount?> fetchVaccineCountBySido(int start, int endPage, String sido) async {
 
   var response = await http
       .get("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5Bsido%3A%3AEQ%5D=$sido&serviceKey=${ApiKey.API_KEY_2}");
   print(response.body);
-  if (response.statusCode == 200) {}
+  if (response.statusCode == 200) {
+    VaccineCount vaccineCount = VaccineCount.fromJson(jsonDecode(response.body));
+    return vaccineCount;
+  }else{
+    return null;
+  }
 }
