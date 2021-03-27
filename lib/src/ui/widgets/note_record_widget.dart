@@ -22,10 +22,10 @@ class _NoteRecordWidgetState extends State<NoteRecordWidget> {
     // TODO: implement initState
     super.initState();
     Fimber.d(">>> initState");
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 2), () {
       isLoading = true;
+      noteItems = getIt.get<AppDBProvider>().noteBox?.values.toList();
       setState(() {
-        noteItems = getIt.get<AppDBProvider>().noteBox?.values.toList();
       });
     });
   }
