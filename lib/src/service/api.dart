@@ -52,9 +52,10 @@ Future<VaccineCount?> fetchVaccineCount(int start, int endPage, String? baseDate
   if(baseDate == null){
     baseDate =  DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
   }
-  var response = await http
-      .get("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
+  var url = Uri.parse("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5BbaseDate%3A%3AEQ%5D=$baseDate&serviceKey=${ApiKey.API_KEY_2}");
+  var response = await http
+      .get(url);
   print(response.body);
   if (response.statusCode == 200) {
     VaccineCount vaccineCount = VaccineCount.fromJson(jsonDecode(response.body));
@@ -65,11 +66,11 @@ Future<VaccineCount?> fetchVaccineCount(int start, int endPage, String? baseDate
 }
 
 Future<VaccineCount?> fetchVaccineCountBySido(int start, int endPage, String sido) async {
-
-  var response = await http
-      .get("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
+  var url = Uri.parse("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5Bsido%3A%3AEQ%5D=$sido&serviceKey=${ApiKey.API_KEY_2}");
-  print(response.body);
+  var response = await http
+      .get(url);
+  print("시도: ${response.body}");
   if (response.statusCode == 200) {
     VaccineCount vaccineCount = VaccineCount.fromJson(jsonDecode(response.body));
     return vaccineCount;
