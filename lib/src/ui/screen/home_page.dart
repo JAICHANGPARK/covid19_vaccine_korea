@@ -120,10 +120,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          "전국 접종 현황(1차, 2차)",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                         Expanded(
                           flex:2,
                           child: HomeChartWidget(),
                         ),
+                        SizedBox(height: 8,),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
