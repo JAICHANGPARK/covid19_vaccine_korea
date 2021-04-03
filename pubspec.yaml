@@ -37,6 +37,8 @@ dependencies:
   get_it: any
   intl: ^0.17.0
 
+  fl_chart: ^0.35.0
+
 #  latlng: any
 #  location: ^4.0.2
 
