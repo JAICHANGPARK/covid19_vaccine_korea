@@ -2,6 +2,7 @@ import 'package:covid_19_vaccine_korea/src/db/db.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
+import 'package:covid_19_vaccine_korea/src/ui/widgets/home_chart_widget.dart';
 import '../../../main.dart';
 import 'maps/map_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/screen/note/new_note_page.dart';
