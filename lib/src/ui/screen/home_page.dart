@@ -119,6 +119,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Expanded(
+                          flex:2,
+                          child: Placeholder(),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -127,6 +131,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                         ),
                         Expanded(
+                          flex: 4,
                           child: Container(
                               child: _vaccineCount != null
                                   ? Padding(
