@@ -33,7 +33,7 @@ Future fetchVaccineCenterOld() async {
     "api.odcloud.kr",
     '/api/15077586/v1/centers?serviceKey=${ApiKey.API_KEY}',
   );
-  print(url.toString());
+  // print(url.toString());
   // var url = 'https://example.com/whatsit/create';
 
   var response = await http.get(url);
@@ -42,25 +42,24 @@ Future fetchVaccineCenterOld() async {
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
     // var itemCount = jsonResponse['totalItems'];
-    print('Number of books about http: $jsonResponse.');
+    Fimber.d('>>> Number of books about http: $jsonResponse.');
   } else {
-    print('Request failed with status: ${response.statusCode}.');
+    Fimber.d('>>> Request failed with status: ${response.statusCode}.');
   }
 }
 
 Future<VaccineCount?> fetchVaccineCount(int start, int endPage, String? baseDate) async {
-  if(baseDate == null){
-    baseDate =  DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
+  if (baseDate == null) {
+    baseDate = DateFormat("yyyy-MM-dd 00:00:00").format(DateTime.now());
   }
   var url = Uri.parse("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5BbaseDate%3A%3AEQ%5D=$baseDate&serviceKey=${ApiKey.API_KEY_2}");
-  var response = await http
-      .get(url);
-  print(response.body);
+  var response = await http.get(url);
+  // print(response.body);
   if (response.statusCode == 200) {
     VaccineCount vaccineCount = VaccineCount.fromJson(jsonDecode(response.body));
     return vaccineCount;
-  }else{
+  } else {
     return null;
   }
 }
@@ -68,13 +67,12 @@ Future<VaccineCount?> fetchVaccineCount(int start, int endPage, String? baseDate
 Future<VaccineCount?> fetchVaccineCountBySido(int start, int endPage, String sido) async {
   var url = Uri.parse("https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=${start}&perPage=${endPage}"
       "&cond%5Bsido%3A%3AEQ%5D=$sido&serviceKey=${ApiKey.API_KEY_2}");
-  var response = await http
-      .get(url);
-  print("시도: ${response.body}");
+  var response = await http.get(url);
+  // print("시도: ${response.body}");
   if (response.statusCode == 200) {
     VaccineCount vaccineCount = VaccineCount.fromJson(jsonDecode(response.body));
     return vaccineCount;
-  }else{
+  } else {
     return null;
   }
 }
