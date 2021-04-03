@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       });
     });
     _tabController = TabController(length: 4, vsync: this);
+    fetchVaccineCountBySido(1, 100, "전국");
     // fetchVaccineCenter();
   }
 
