@@ -151,6 +151,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           itemCount: _vaccineCount?.data?.length,
                                           itemBuilder: (context, index) {
                                             Data? d = _vaccineCount?.data?[index];
+                                            final formatCurrency = NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0);
+                                            // print(formatCurrency);
+
                                             return Card(
                                               elevation: 2,
                                               child: Padding(
@@ -165,15 +168,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                     ),
                                                     Divider(),
                                                     Text(
-                                                      "1회차 전일누적: ${d?.accumulatedFirstCnt} 명",
+                                                      "1회차 전일누적: ${formatCurrency.format(d?.accumulatedFirstCnt)} 명",
                                                       style: TextStyle(fontSize: 12),
                                                     ),
                                                     Text(
-                                                      "1회차 전일실적: ${d?.firstCnt} 명",
+                                                      "1회차 전일실적: ${formatCurrency.format(d?.firstCnt)} 명",
                                                       style: TextStyle(fontSize: 12),
                                                     ),
                                                     Text(
-                                                      "1회차 당일누적: ${d?.totalFirstCnt}명",
+                                                      "1회차 당일누적: ${formatCurrency.format(d?.totalFirstCnt)}명",
                                                       style: TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: FontWeight.bold,
@@ -181,15 +184,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                     ),
                                                     Divider(),
                                                     Text(
-                                                      "2회차 전일누적: ${d?.accumulatedSecondCnt} 명",
+                                                      "2회차 전일누적: ${formatCurrency.format(d?.accumulatedSecondCnt)} 명",
                                                       style: TextStyle(fontSize: 12),
                                                     ),
                                                     Text(
-                                                      "2회차 전일실적: ${d?.secondCnt} 명",
+                                                      "2회차 전일실적: ${formatCurrency.format(d?.secondCnt)} 명",
                                                       style: TextStyle(fontSize: 12),
                                                     ),
                                                     Text(
-                                                      "2회차 당일누적: ${d?.totalSecondCnt}명",
+                                                      "2회차 당일누적: ${formatCurrency.format(d?.totalSecondCnt)}명",
                                                       style: TextStyle(
                                                           fontSize: 12,
                                                           fontWeight: FontWeight.bold,
