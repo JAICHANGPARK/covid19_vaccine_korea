@@ -21,13 +21,13 @@ dependencies:
   http: any
   fimber: ^0.6.1
   sliding_up_panel: ^1.0.2
-  webview_flutter: ^2.0.3
+  webview_flutter: ^2.0.4
   package_info: ^2.0.0
 
   flutter_map: any
 
   firebase_analytics: ^7.1.1
-  firebase_core: ^1.0.2
+  firebase_core: ^1.0.3
   shared_preferences: any
 
   hive: ^2.0.2
