@@ -2,6 +2,7 @@ import 'package:covid_19_vaccine_korea/src/db/db.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
+import 'package:covid_19_vaccine_korea/src/ui/screen/vaccine_count_detail_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/widgets/home_chart_widget.dart';
 import '../../../main.dart';
 import 'maps/map_page.dart';
@@ -154,51 +155,58 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                             final formatCurrency = NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0);
                                             // print(formatCurrency);
 
-                                            return Card(
-                                              elevation: 2,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  children: [
-                                                    Text(
-                                                      "${d?.sido}",
-                                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                                    ),
-                                                    Divider(),
-                                                    Text(
-                                                      "1회차 전일누적: ${formatCurrency.format(d?.accumulatedFirstCnt)} 명",
-                                                      style: TextStyle(fontSize: 12),
-                                                    ),
-                                                    Text(
-                                                      "1회차 전일실적: ${formatCurrency.format(d?.firstCnt)} 명",
-                                                      style: TextStyle(fontSize: 12),
-                                                    ),
-                                                    Text(
-                                                      "1회차 당일누적: ${formatCurrency.format(d?.totalFirstCnt)}명",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: Colors.blue),
-                                                    ),
-                                                    Divider(),
-                                                    Text(
-                                                      "2회차 전일누적: ${formatCurrency.format(d?.accumulatedSecondCnt)} 명",
-                                                      style: TextStyle(fontSize: 12),
-                                                    ),
-                                                    Text(
-                                                      "2회차 전일실적: ${formatCurrency.format(d?.secondCnt)} 명",
-                                                      style: TextStyle(fontSize: 12),
-                                                    ),
-                                                    Text(
-                                                      "2회차 당일누적: ${formatCurrency.format(d?.totalSecondCnt)}명",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: Colors.green),
-                                                    ),
-                                                  ],
+                                            return InkWell(
+                                              onTap: (){
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                                  return VaccineCountDetailPage(sidoName: d?.sido ?? "");
+                                                }));
+                                              },
+                                              child: Card(
+                                                elevation: 2,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                    children: [
+                                                      Text(
+                                                        "${d?.sido}",
+                                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                      ),
+                                                      Divider(),
+                                                      Text(
+                                                        "1회차 전일누적: ${formatCurrency.format(d?.accumulatedFirstCnt)} 명",
+                                                        style: TextStyle(fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        "1회차 전일실적: ${formatCurrency.format(d?.firstCnt)} 명",
+                                                        style: TextStyle(fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        "1회차 당일누적: ${formatCurrency.format(d?.totalFirstCnt)}명",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.blue),
+                                                      ),
+                                                      Divider(),
+                                                      Text(
+                                                        "2회차 전일누적: ${formatCurrency.format(d?.accumulatedSecondCnt)} 명",
+                                                        style: TextStyle(fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        "2회차 전일실적: ${formatCurrency.format(d?.secondCnt)} 명",
+                                                        style: TextStyle(fontSize: 12),
+                                                      ),
+                                                      Text(
+                                                        "2회차 당일누적: ${formatCurrency.format(d?.totalSecondCnt)}명",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.green),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             );
