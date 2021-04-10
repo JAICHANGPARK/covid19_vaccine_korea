@@ -142,7 +142,7 @@ class _DetailChartWidgetState extends State<DetailChartWidget> {
                 borderData: FlBorderData(
                   show: true,
                   // border: Border.all(color: const Color(0xff37434d), width: 1),
-                  border: Border.all(color: Colors.grey, width: 1),
+                  border: Border.all(color: Colors.grey[400]!, width: 0.5),
                 ),
                 lineBarsData: [
                   LineChartBarData(
