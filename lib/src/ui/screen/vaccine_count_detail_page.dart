@@ -13,14 +13,13 @@ class VaccineCountDetailPage extends StatefulWidget {
 }
 
 class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
-
   final formatCurrency = NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0);
+  TextStyle dataTextStyle = TextStyle(fontSize: 12);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -49,7 +48,8 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                 child: Stack(
                   children: [
                     Positioned(
-                      child: SizedBox(child: Card(
+                      child: SizedBox(
+                          child: Card(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 64),
                           child: Column(
@@ -65,7 +65,9 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                                   ],
                                 ),
                               ),
-                              Divider(color: Colors.grey,),
+                              Divider(
+                                color: Colors.grey,
+                              ),
                               Row(
                                 children: [
                                   Expanded(child: Text("")),
@@ -75,31 +77,58 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                                   Expanded(child: Text("당일누적")),
                                 ],
                               ),
+                              Divider(
+                                color: Colors.grey,
+                              ),
                               Expanded(
                                 child: FutureBuilder<VaccineCount?>(
-                                  future:fetchVaccineCountBySido(1, 100, widget.sidoName),
-                                  builder: (context, snapshot){
-                                    if(snapshot.hasData){
-                                      if(snapshot.data?.data?.length == 0) return Text("데이터 없음");
-                                      if(snapshot.data != null){
+                                  future: fetchVaccineCountBySido(1, 100, widget.sidoName),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      if (snapshot.data?.data?.length == 0) return Text("데이터 없음");
+                                      if (snapshot.data != null) {
                                         List<Data?> result = snapshot.data!.data!;
                                         result = result.reversed.toList();
-                                        return ListView.separated(itemBuilder: (context, index){
-                                          Data? d = result[index];
+                                        return ListView.separated(
+                                          itemBuilder: (context, index) {
+                                            Data? d = result[index];
 
-                                          return  Row(
-                                            children: [
-                                              Expanded(child: Text("${d?.baseDate?.split(" ").first}")),
-                                              Expanded(child: Text("${formatCurrency.format(d?.firstCnt)} 명")),
-                                              Expanded(child: Text("${formatCurrency.format(d?.totalFirstCnt)} 명")),
-                                              Expanded(child: Text("${formatCurrency.format(d?.secondCnt)} 명")),
-                                              Expanded(child: Text("${formatCurrency.format(d?.totalSecondCnt)} 명")),
-                                            ],
-                                          );
-                                        },
-                                        itemCount: result.length,
-                                          separatorBuilder: (context, index){
-                                          return Divider(color: Colors.grey,);
+                                            return Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    "${d?.baseDate?.split(" ").first}",
+                                                    style: dataTextStyle,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    child: Text(
+                                                  "${formatCurrency.format(d?.firstCnt)} 명",
+                                                  style: dataTextStyle,
+                                                )),
+                                                Expanded(
+                                                    child: Text(
+                                                  "${formatCurrency.format(d?.totalFirstCnt)} 명",
+                                                  style: dataTextStyle,
+                                                )),
+                                                Expanded(
+                                                    child: Text(
+                                                  "${formatCurrency.format(d?.secondCnt)} 명",
+                                                  style: dataTextStyle,
+                                                )),
+                                                Expanded(
+                                                    child: Text(
+                                                  "${formatCurrency.format(d?.totalSecondCnt)} 명",
+                                                  style: dataTextStyle,
+                                                )),
+                                              ],
+                                            );
+                                          },
+                                          itemCount: result.length,
+                                          separatorBuilder: (context, index) {
+                                            return Divider(
+                                              color: Colors.grey,
+                                            );
                                           },
                                         );
                                       }
@@ -108,10 +137,7 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          CircularProgressIndicator(),
-                                          Text("불러오는 중")
-                                        ],
+                                        children: [CircularProgressIndicator(), Text("불러오는 중")],
                                       ),
                                     );
                                   },
@@ -120,7 +146,6 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                             ],
                           ),
                         ),
-
                       )),
                       left: 0,
                       right: 0,
@@ -128,10 +153,11 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                       bottom: 0,
                     ),
                     Positioned(
-                      child: SizedBox(height: 240, child: Card(
-                        elevation: 4,
-
-                      )),
+                      child: SizedBox(
+                          height: 240,
+                          child: Card(
+                            elevation: 4,
+                          )),
                       left: 16,
                       right: 16,
                       top: 0,
