@@ -1,6 +1,7 @@
 import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -42,113 +43,139 @@ class _DetailChartWidgetState extends State<DetailChartWidget> {
   ];
 
   final List<Color> gradientColors2 = [
-    const Color(0xff02d39a),
-    Colors.green,
+    Colors.red[600]!,
+    Colors.red,
+
   ];
 
   @override
   Widget build(BuildContext context) {
     return  firstData.length > 0 ? Padding(
       padding: const EdgeInsets.all(8.0),
-      child: LineChart(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text("1차,2차 당일 실적", style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold
+              ),),
+              Spacer(),
+              CircleAvatar(backgroundColor: Colors.blue, radius: 4,),
+              Text("1차 접종 실적", style: TextStyle(
+                fontSize: 10
+              ),),
+              SizedBox(width: 8,),
+              CircleAvatar(backgroundColor: Colors.red, radius: 4,),
+              Text("2차 접종 실적", style: TextStyle(
+                fontSize: 10
+              ),),
 
-        LineChartData(
-          minY: 0,
+            ],
+          ),
+          SizedBox(height: 8,),
+          Expanded(
+            child: LineChart(
 
-          titlesData: FlTitlesData(
-            show: true,
-            bottomTitles: SideTitles(
-              showTitles: true,
+              LineChartData(
+                minY: 0,
 
-              getTextStyles: (value) => const TextStyle(
-                color: Color(0xff68737d),
-                fontWeight: FontWeight.bold,
-                fontSize: 10,
+                titlesData: FlTitlesData(
+                  show: true,
+                  bottomTitles: SideTitles(
+                    showTitles: false,
+
+                    getTextStyles: (value) => const TextStyle(
+                      color: Color(0xff68737d),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                    getTitles: (value) {
+                      // print(value);
+                      return value.toStringAsFixed(0);
+                    },
+                    reservedSize: 0,
+                    margin: 8,
+                  ),
+                  leftTitles: SideTitles(
+                    showTitles: false,
+                    getTextStyles: (value) => const TextStyle(
+                      color: Color(0xff67727d),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                    getTitles: (value) {
+                      // print(value);
+                      switch (value.toInt()) {
+                        case 10000:
+                          return '10k';
+                        case 30000:
+                          return '30k';
+                        case 50000:
+                          return '50k';
+                      }
+                      return '';
+                    },
+                    reservedSize: 16,
+                    margin: 8,
+                  ),
+                ),
+                // titlesData: LineTitles.getTitleData(),
+                gridData: FlGridData(
+                  show: true,
+                  getDrawingHorizontalLine: (value) {
+                    return FlLine(
+                      // color: const Color(0xff37434d),
+                      color: Colors.grey[300],
+                      strokeWidth: 1,
+                    );
+                  },
+                  drawVerticalLine: true,
+                  getDrawingVerticalLine: (value) {
+                    return FlLine(
+                      // color: const Color(0xff37434d),
+                      color: Colors.grey[300],
+                      strokeWidth: 1,
+                    );
+                  },
+                ),
+                borderData: FlBorderData(
+                  show: true,
+                  // border: Border.all(color: const Color(0xff37434d), width: 1),
+                  border: Border.all(color: Colors.grey, width: 1),
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: firstData,
+                    isCurved: false,
+                    colors: gradientColors,
+                    barWidth: 1.5,
+                    dotData: FlDotData(show: false,),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      colors: gradientColors
+                          .map((color) => color.withOpacity(0.3))
+                          .toList(),
+                    ),
+                  ),
+                  LineChartBarData(
+                    spots: secondData,
+                    isCurved: false,
+                    colors: gradientColors2,
+                    barWidth: 1.5,
+                    dotData: FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      colors: gradientColors2
+                          .map((color) => color.withOpacity(0.3))
+                          .toList(),
+                    ),
+                  ),
+                ],
               ),
-              getTitles: (value) {
-                // print(value);
-                return value.toStringAsFixed(0);
-              },
-              reservedSize: 0,
-              margin: 8,
-            ),
-            leftTitles: SideTitles(
-              showTitles: true,
-              getTextStyles: (value) => const TextStyle(
-                color: Color(0xff67727d),
-                fontWeight: FontWeight.bold,
-                fontSize: 10,
-              ),
-              getTitles: (value) {
-                // print(value);
-                switch (value.toInt()) {
-                  case 10000:
-                    return '10k';
-                  case 30000:
-                    return '30k';
-                  case 50000:
-                    return '50k';
-                }
-                return '';
-              },
-              reservedSize: 16,
-              margin: 8,
             ),
           ),
-          // titlesData: LineTitles.getTitleData(),
-          gridData: FlGridData(
-            show: true,
-            getDrawingHorizontalLine: (value) {
-              return FlLine(
-                // color: const Color(0xff37434d),
-                color: Colors.grey[300],
-                strokeWidth: 1,
-              );
-            },
-            drawVerticalLine: true,
-            getDrawingVerticalLine: (value) {
-              return FlLine(
-                // color: const Color(0xff37434d),
-                color: Colors.grey[300],
-                strokeWidth: 1,
-              );
-            },
-          ),
-          borderData: FlBorderData(
-            show: true,
-            // border: Border.all(color: const Color(0xff37434d), width: 1),
-            border: Border.all(color: Colors.grey, width: 1),
-          ),
-          lineBarsData: [
-            LineChartBarData(
-              spots: firstData,
-              isCurved: true,
-              colors: gradientColors,
-              barWidth: 1.5,
-              dotData: FlDotData(show: false,),
-              belowBarData: BarAreaData(
-                show: true,
-                colors: gradientColors
-                    .map((color) => color.withOpacity(0.3))
-                    .toList(),
-              ),
-            ),
-            LineChartBarData(
-              spots: secondData,
-
-              isCurved: true,
-              colors: gradientColors2,
-              barWidth: 1.5,
-              dotData: FlDotData(show: false),
-              belowBarData: BarAreaData(
-                show: true,
-                colors: gradientColors2
-                    .map((color) => color.withOpacity(0.3))
-                    .toList(),
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
     ) : Center(
       child: Column(
@@ -156,7 +183,7 @@ class _DetailChartWidgetState extends State<DetailChartWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircularProgressIndicator(),
-          Text("데이터 가져오는 중")
+          Text("데이터 없음.")
         ],
       ),
     );
