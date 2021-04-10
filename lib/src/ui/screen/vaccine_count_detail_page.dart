@@ -33,17 +33,32 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                           Navigator.of(context).pop();
                         },
                         icon: Icon(Icons.arrow_back)),
-                    Text("${widget.sidoName} 상세 정보", style: TextStyle(
-                      fontSize: 18
-                    ),)
+                    Text(
+                      "${widget.sidoName} 상세 정보",
+                      style: TextStyle(fontSize: 18),
+                    )
                   ],
                 )),
-            Expanded(flex: 20, child: Stack(
-              children: [
-                Positioned(child: SizedBox(child: Card()), left: 16, right: 16, top: 0,
-                )
-              ],
-            ))
+            Expanded(
+                flex: 20,
+                child: Stack(
+                  children: [
+
+                    Positioned(
+                      child: SizedBox(child: Card()),
+                      left: 0,
+                      right: 0,
+                      top: 170,
+                      bottom: 0,
+                    ),
+                    Positioned(
+                      child: SizedBox(height: 240, child: Card()),
+                      left: 16,
+                      right: 16,
+                      top: 0,
+                    ),
+                  ],
+                ))
           ],
         ),
       ),
