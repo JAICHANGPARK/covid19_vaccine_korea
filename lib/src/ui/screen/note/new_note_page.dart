@@ -140,8 +140,8 @@ class _NewNotePageState extends State<NewNotePage> {
                                     _symptom += ",";
                                   });
                                 }
-                                print(_symptom);
-                                print(symptomList);
+                                // print(_symptom);
+                                // print(symptomList);
                                 int? index = await getIt.get<AppDBProvider>().addNote(Note()
                                   ..title = "${DateTime.now().toString()}"
                                   ..symptom = _symptom
