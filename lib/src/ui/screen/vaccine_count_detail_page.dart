@@ -38,7 +38,12 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                     ),)
                   ],
                 )),
-            Expanded(flex: 15, child: Placeholder())
+            Expanded(flex: 20, child: Stack(
+              children: [
+                Positioned(child: SizedBox(child: Card()), left: 16, right: 16, top: 0,
+                )
+              ],
+            ))
           ],
         ),
       ),
