@@ -1,3 +1,4 @@
+import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchVaccineCountBySido(1, 100, widget.sidoName);
+
   }
 
   @override
@@ -46,6 +47,27 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
 
                     Positioned(
                       child: SizedBox(child: Card(
+                        child: FutureBuilder<VaccineCount?>(
+                          future:fetchVaccineCountBySido(1, 100, widget.sidoName),
+                          builder: (context, snapshot){
+                            if(snapshot.hasData){
+                              if(snapshot.data?.data?.length == 0) return Text("데이터 없음");
+                              if(snapshot.data != null){
+                                
+                              }
+                            }
+                            return Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(),
+                                  Text("불러오는 중")
+                                ],
+                              ),
+                            );
+                          },
+                        ),
 
                       )),
                       left: 0,
