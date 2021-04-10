@@ -15,6 +15,7 @@ class VaccineCountDetailPage extends StatefulWidget {
 class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
   final formatCurrency = NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0);
   TextStyle dataTextStyle = TextStyle(fontSize: 12);
+  TextStyle headerTextStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
 
   @override
   void initState() {
@@ -51,7 +52,7 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                       child: SizedBox(
                           child: Card(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 64),
+                          padding: const EdgeInsets.only(top: 64, left: 8, right: 8),
                           child: Column(
                             children: [
                               Padding(
@@ -59,9 +60,17 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Expanded(child: Text("날짜")),
-                                    Expanded(child: Text("1차접종")),
-                                    Expanded(child: Text("2차접종")),
+                                    Expanded(child: Text("날짜", style: headerTextStyle,)),
+                                    Expanded(
+                                        flex: 2,
+                                        child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("1차접종", style: headerTextStyle,))),
+                                    Expanded(
+                                        flex: 2,
+                                        child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("2차접종", style: headerTextStyle,))),
                                   ],
                                 ),
                               ),
@@ -71,10 +80,12 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                               Row(
                                 children: [
                                   Expanded(child: Text("")),
-                                  Expanded(child: Text("당일실적")),
-                                  Expanded(child: Text("당일누적")),
-                                  Expanded(child: Text("당일실적")),
-                                  Expanded(child: Text("당일누적")),
+                                  Expanded(child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("당일실적", style: headerTextStyle,))),
+                                  Expanded(child: Text("당일누적", style: headerTextStyle,)),
+                                  Expanded(child: Text("당일실적", style: headerTextStyle,)),
+                                  Expanded(child: Text("당일누적", style: headerTextStyle,)),
                                 ],
                               ),
                               Divider(
@@ -127,7 +138,7 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                                           itemCount: result.length,
                                           separatorBuilder: (context, index) {
                                             return Divider(
-                                              color: Colors.grey,
+                                              color: Colors.grey[400],
                                             );
                                           },
                                         );
