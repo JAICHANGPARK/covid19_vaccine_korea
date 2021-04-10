@@ -37,8 +37,8 @@ class _HomeChartWidgetState extends State<HomeChartWidget> {
           secondData.add(FlSpot(i.toDouble(), items[i].secondCnt!.toDouble()));
         }
       }
-      print(firstData);
-      print(secondData);
+      // print(firstData);
+      // print(secondData);
       setState(() {
 
       });
