@@ -1,5 +1,20 @@
 # covid19_vaccine_korea
 
+
+<div style="text-align: center">
+  <table>
+    <tr>
+<td style="text-align: center">
+    <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_1618029063.png" width="200"/>
+</td>
+<td style="text-align: center">
+    <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_1618028745.png" width="200"/>
+</td>
+      
+</tr>
+</table>
+</div>
+
 <div style="text-align: center">
   <table>
     <tr>
@@ -13,7 +28,6 @@
 <td style="text-align: center">
    <img src="https://github.com/JAICHANGPARK/covid19_vaccine_korea/blob/main/capture/Screenshot_1615087710.png" width="200"/>
 </td>
-     
 </tr>
 </table>
 </div>
