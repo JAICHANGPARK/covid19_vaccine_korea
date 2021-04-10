@@ -45,14 +45,19 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                   children: [
 
                     Positioned(
-                      child: SizedBox(child: Card()),
+                      child: SizedBox(child: Card(
+
+                      )),
                       left: 0,
                       right: 0,
                       top: 170,
                       bottom: 0,
                     ),
                     Positioned(
-                      child: SizedBox(height: 240, child: Card()),
+                      child: SizedBox(height: 240, child: Card(
+                        elevation: 4,
+
+                      )),
                       left: 16,
                       right: 16,
                       top: 0,
