@@ -52,7 +52,7 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                       child: SizedBox(
                           child: Card(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 64, left: 8, right: 8),
+                          padding: const EdgeInsets.only(top: 32, left: 8, right: 8),
                           child: Column(
                             children: [
                               Padding(
@@ -165,7 +165,7 @@ class _VaccineCountDetailPageState extends State<VaccineCountDetailPage> {
                     ),
                     Positioned(
                       child: SizedBox(
-                          height: 240,
+                          height: 200,
                           child: Card(
                             elevation: 4,
                           )),
