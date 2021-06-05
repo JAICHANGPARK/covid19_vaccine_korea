@@ -1,10 +1,8 @@
-import 'package:covid_19_vaccine_korea/src/db/db.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:covid_19_vaccine_korea/src/model/vaccine_count.dart';
 import 'package:covid_19_vaccine_korea/src/service/api.dart';
 import 'package:covid_19_vaccine_korea/src/ui/screen/vaccine_count_detail_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/widgets/home_chart_widget.dart';
-import '../../../main.dart';
 import 'maps/map_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/screen/note/new_note_page.dart';
 import 'package:covid_19_vaccine_korea/src/ui/widgets/note_record_widget.dart';
@@ -112,6 +110,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   Tab(
                     text: "Q&A",
                   ),
+
                 ],
               ),
               Expanded(
@@ -126,10 +125,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Expanded(
-                          flex:2,
+                          flex: 2,
                           child: HomeChartWidget(),
                         ),
-                        SizedBox(height: 8,),
+                        SizedBox(
+                          height: 8,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -152,12 +153,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           itemCount: _vaccineCount?.data?.length,
                                           itemBuilder: (context, index) {
                                             Data? d = _vaccineCount?.data?[index];
-                                            final formatCurrency = NumberFormat.simpleCurrency(locale: "ko_KR", name: "", decimalDigits: 0);
+                                            final formatCurrency = NumberFormat.simpleCurrency(
+                                                locale: "ko_KR", name: "", decimalDigits: 0);
                                             // print(formatCurrency);
 
                                             return InkWell(
-                                              onTap: (){
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                              onTap: () {
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                                                   return VaccineCountDetailPage(sidoName: d?.sido ?? "");
                                                 }));
                                               },
@@ -317,7 +319,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                               borderRadius: BorderRadius.circular(16)),
                                                           child: FlutterMap(
                                                             options: MapOptions(
-                                                                center: LatLng(_lng, _lat), zoom: 15.0, maxZoom: 18.0),
+                                                                center: LatLng(_lat,_lng ), zoom: 15.0, maxZoom: 18.0),
                                                             layers: [
                                                               TileLayerOptions(
                                                                   urlTemplate:
@@ -326,7 +328,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                               MarkerLayerOptions(
                                                                 markers: [
                                                                   Marker(
-                                                                    point: LatLng(_lng, _lat),
+                                                                    point: LatLng( _lat, _lng,),
                                                                     builder: (ctx) => Container(
                                                                       child: Icon(
                                                                         Icons.location_pin,
@@ -420,19 +422,39 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         child: MaterialButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => WebViewPage("https://ncv.kdca.go.kr/", "코로나19백신 및 예방접종")));
+                                builder: (context) => WebViewPage("https://ncv.kdca.go.kr/", "코로나19 백신 및 예방접종")));
                           },
                           color: Theme.of(context).accentColor,
                           minWidth: double.infinity,
                           child: Center(
                               child: Text(
-                            "코로나19백신 및 예방접종",
+                            "코로나19 백신 및 예방접종",
                             style: TextStyle(
                                 fontSize: 16,
                                 color: MediaQuery.of(context).platformBrightness == Brightness.dark
                                     ? Colors.black
                                     : Colors.white),
                           )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => WebViewPage("https://ncvr.kdca.go.kr/cobk/index.html", "코로나19 예방접종 사전예약 시스템")));
+                          },
+                          color: Theme.of(context).accentColor,
+                          minWidth: double.infinity,
+                          child: Center(
+                              child: Text(
+                                "코로나19 예방접종 사전예약 시스템",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                                        ? Colors.black
+                                        : Colors.white),
+                              )),
                         ),
                       ),
                     ],

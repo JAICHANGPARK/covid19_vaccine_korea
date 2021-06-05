@@ -1,12 +1,8 @@
 import 'package:covid_19_vaccine_korea/src/db/db.dart';
-import 'package:covid_19_vaccine_korea/src/db/object/note.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 import 'src/ui/screen/main_app.dart';
 
 // This is our global ServiceLocator

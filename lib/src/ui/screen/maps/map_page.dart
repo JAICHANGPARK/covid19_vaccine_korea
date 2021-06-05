@@ -23,7 +23,7 @@ class _MapPageState extends State<MapPage> {
         double _lat = double.parse(element.lat!);
         double _lng = double.parse(element.lng!);
         markers.add(Marker(
-          point: LatLng(_lng, _lat),
+          point: LatLng(_lat, _lng),
           builder: (ctx) => Container(
             child: Icon(Icons.location_pin,
             color: Colors.blue,
