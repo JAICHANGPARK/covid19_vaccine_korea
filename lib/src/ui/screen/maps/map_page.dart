@@ -1,7 +1,7 @@
 import 'package:covid_19_vaccine_korea/src/model/vaccine_center.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class MapPage extends StatefulWidget {
   final VaccineCenter? vaccineCenter;
