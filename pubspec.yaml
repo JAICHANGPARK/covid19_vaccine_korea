@@ -7,7 +7,7 @@ homepage: https://github.com/JAICHANGPARK/covid19_vaccine_korea
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.0+8
+version: 1.1.1+9
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -21,23 +21,23 @@ dependencies:
   http: any
   fimber: ^0.6.1
   sliding_up_panel: ^2.0.0+1
-  webview_flutter: ^2.0.8
+  webview_flutter: ^2.0.12
   package_info: ^2.0.2
 
   flutter_map: any
 
-  firebase_analytics: ^8.1.1
-  firebase_core: ^1.2.1
+  firebase_analytics: ^8.3.1
+  firebase_core: ^1.6.0
   shared_preferences: any
 
   hive: ^2.0.4
-  hive_flutter: ^1.0.0
+  hive_flutter: ^1.1.0
 
   provider: any
   get_it: any
   intl: ^0.17.0
 
-  fl_chart: ^0.36.1
+  fl_chart: ^0.40.0
 #  charts_flutter: ^0.10.0
 
 #  latlng: any

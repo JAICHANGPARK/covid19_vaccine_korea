@@ -85,7 +85,7 @@ class _DetailChartWidgetState extends State<DetailChartWidget> {
                   bottomTitles: SideTitles(
                     showTitles: false,
 
-                    getTextStyles: (value) => const TextStyle(
+                    getTextStyles: (context, value)  => const TextStyle(
                       color: Color(0xff68737d),
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
@@ -99,7 +99,7 @@ class _DetailChartWidgetState extends State<DetailChartWidget> {
                   ),
                   leftTitles: SideTitles(
                     showTitles: false,
-                    getTextStyles: (value) => const TextStyle(
+                    getTextStyles: (context, value)  => const TextStyle(
                       color: Color(0xff67727d),
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
@@ -195,7 +195,7 @@ class LineTitles {
     bottomTitles: SideTitles(
       showTitles: true,
       reservedSize: 35,
-      getTextStyles: (value) => const TextStyle(
+      getTextStyles: (context, value)  => const TextStyle(
         color: Color(0xff68737d),
         fontWeight: FontWeight.bold,
         fontSize: 16,
@@ -215,7 +215,7 @@ class LineTitles {
     ),
     leftTitles: SideTitles(
       showTitles: true,
-      getTextStyles: (value) => const TextStyle(
+      getTextStyles: (context, value)  => const TextStyle(
         color: Color(0xff67727d),
         fontWeight: FontWeight.bold,
         fontSize: 15,

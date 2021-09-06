@@ -14,26 +14,6 @@ class _HomeChartWidgetState extends State<HomeChartWidget> {
   List<FlSpot> firstData = [];
   List<FlSpot> secondData = [];
 
-  /// Create one series with sample hard coded data.
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    fetchVaccineCountBySido(1, 100, "전국").then((value) {
-      var items = value?.data;
-      if (items!.length > 0) {
-        for (int i = 0; i < items.length; i++) {
-          firstData.add(FlSpot(i.toDouble(), items[i].firstCnt!.toDouble()));
-          secondData.add(FlSpot(i.toDouble(), items[i].secondCnt!.toDouble()));
-        }
-      }
-      // print(firstData);
-      // print(secondData);
-      setState(() {});
-    });
-  }
-
   final List<Color> gradientColors = [
     Colors.blue,
     Colors.blue[400]!,
@@ -48,6 +28,22 @@ class _HomeChartWidgetState extends State<HomeChartWidget> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchVaccineCountBySido(1, 100, "전국").then((value) {
+      var items = value?.data;
+      if (items!.length > 0) {
+        for (int i = 0; i < items.length; i++) {
+          firstData.add(FlSpot(i.toDouble(), items[i].firstCnt!.toDouble()));
+          secondData.add(FlSpot(i.toDouble(), items[i].secondCnt!.toDouble()));
+        }
+      }
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return firstData.length > 0
         ? Padding(
@@ -55,50 +51,56 @@ class _HomeChartWidgetState extends State<HomeChartWidget> {
             child: LineChart(
               LineChartData(
                 minY: 0,
-
+                maxY: 1000000,
                 titlesData: FlTitlesData(
                   show: true,
                   bottomTitles: SideTitles(
                     showTitles: true,
-                    getTextStyles: (value) => const TextStyle(
+                    getTextStyles: (context, value) => const TextStyle(
                       color: Color(0xff68737d),
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
                     ),
                     getTitles: (value) {
-                      // print(value);
                       return value.toStringAsFixed(0);
                     },
                     reservedSize: 0,
                     margin: 8,
                   ),
+                  rightTitles: SideTitles(
+                    showTitles: false,
+                  ),
+                  topTitles: SideTitles(
+                    showTitles: false,
+                  ),
                   leftTitles: SideTitles(
                     showTitles: true,
-                    getTextStyles: (value) => const TextStyle(
+                    getTextStyles: (context, value) => const TextStyle(
                       color: Color(0xff67727d),
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
                     ),
-                    getTitles: (value) {
-                      // print(value);
-                      switch (value.toInt()) {
-                        case 10000:
-                          return '10k';
-                        case 30000:
-                          return '30k';
-                        case 50000:
-                          return '50k';
-                        case 100000:
-                          return '100k';
-                        case 250000:
-                          return '250k';
-                        case 500000:
-                          return '500k';
-                        case 1000000:
-                          return '1000k';
-                      }
-                      return '';
-                    },
+                    interval: 250000,
+                    // getTitles: (value) {
+                    //   // print(value);
+                    //   switch (value.toInt()) {
+                    //     case 10000:
+                    //       return '10k';
+                    //     case 30000:
+                    //       return '30k';
+                    //     case 50000:
+                    //       return '50k';
+                    //     case 100000:
+                    //       return '100k';
+                    //     case 250000:
+                    //       return '250k';
+                    //     case 500000:
+                    //       return '500k';
+                    //     case 1000000:
+                    //       return '1000k';
+                    //   }
+                    //   return '';
+                    // },
                     reservedSize: 16,
                     margin: 8,
                   ),
@@ -172,7 +174,7 @@ class LineTitles {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 35,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (context, value) => const TextStyle(
             color: Color(0xff68737d),
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -192,7 +194,7 @@ class LineTitles {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (context, value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,

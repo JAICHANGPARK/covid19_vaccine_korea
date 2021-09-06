@@ -114,7 +114,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ],
               ),
               Expanded(
-                child: TabBarView(controller: _tabController, children: [
+                child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _tabController, children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -145,11 +147,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   ? Padding(
                                       padding: const EdgeInsets.all(0.0),
                                       child: GridView.builder(
+                                        padding: EdgeInsets.zero,
                                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
                                               crossAxisSpacing: 4,
                                               mainAxisSpacing: 4,
-                                              childAspectRatio: 0.8),
+                                              childAspectRatio: 0.7),
                                           itemCount: _vaccineCount?.data?.length,
                                           itemBuilder: (context, index) {
                                             Data? d = _vaccineCount?.data?[index];
@@ -178,32 +181,32 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                                       Divider(),
                                                       Text(
                                                         "1회차 전일누적: ${formatCurrency.format(d?.accumulatedFirstCnt)} 명",
-                                                        style: TextStyle(fontSize: 12),
+                                                        style: TextStyle(fontSize: 11),
                                                       ),
                                                       Text(
                                                         "1회차 전일실적: ${formatCurrency.format(d?.firstCnt)} 명",
-                                                        style: TextStyle(fontSize: 12),
+                                                        style: TextStyle(fontSize: 11),
                                                       ),
                                                       Text(
                                                         "1회차 당일누적: ${formatCurrency.format(d?.totalFirstCnt)}명",
                                                         style: TextStyle(
-                                                            fontSize: 12,
+                                                            fontSize: 11,
                                                             fontWeight: FontWeight.bold,
                                                             color: Colors.blue),
                                                       ),
                                                       Divider(),
                                                       Text(
                                                         "2회차 전일누적: ${formatCurrency.format(d?.accumulatedSecondCnt)} 명",
-                                                        style: TextStyle(fontSize: 12),
+                                                        style: TextStyle(fontSize: 11),
                                                       ),
                                                       Text(
                                                         "2회차 전일실적: ${formatCurrency.format(d?.secondCnt)} 명",
-                                                        style: TextStyle(fontSize: 12),
+                                                        style: TextStyle(fontSize: 11),
                                                       ),
                                                       Text(
                                                         "2회차 당일누적: ${formatCurrency.format(d?.totalSecondCnt)}명",
                                                         style: TextStyle(
-                                                            fontSize: 12,
+                                                            fontSize: 11,
                                                             fontWeight: FontWeight.bold,
                                                             color: Colors.green),
                                                       ),
